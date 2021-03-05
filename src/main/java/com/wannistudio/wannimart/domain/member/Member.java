@@ -1,5 +1,6 @@
 package com.wannistudio.wannimart.domain.member;
 
+import com.wannistudio.wannimart.controller.member.JoinRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -49,13 +50,30 @@ public class Member {
 
   private LocalDateTime createAt;
 
+  public static Member of(JoinRequest joinRequest) {
+    return Member.builder()
+            .account(joinRequest.getPrincipal())
+            .password(joinRequest.getCredential())
+            .name(joinRequest.getName())
+            .email(new Email(joinRequest.getEmail()))
+            .phoneNumber(joinRequest.getPhoneNumber())
+            .address(new Address(joinRequest.getCityStreetAddress(), joinRequest.getResidentAddress()))
+            .gender(Gender.MEN)
+            .birth(new Birth(joinRequest.getYear(), joinRequest.getMonth(), joinRequest.getDay()))
+            .agreement(new Agreement(joinRequest.isTermsOfUse(), joinRequest.isPersonalInfoUsage(), joinRequest.isMarketingUsage(), joinRequest.isAdult()))
+            .createAt(LocalDateTime.now())
+            .build();
+  }
+
   // jwt 인증토큰 생성.
   public String newApiToken() {
     return "test";
   }
 
-  public void login() {
+  public void login(String account, String password) {
     System.out.println("try login");
+    System.out.println("account : " + account);
+    System.out.println("password : " + password);
   }
 
   public void afterLoginSuccess() {

@@ -1,6 +1,8 @@
 package com.wannistudio.wannimart.domain.member;
 
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
@@ -57,5 +59,12 @@ public class Email {
     @Override
     public int hashCode() {
         return Objects.hash(email);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("email", email)
+                .toString();
     }
 }
