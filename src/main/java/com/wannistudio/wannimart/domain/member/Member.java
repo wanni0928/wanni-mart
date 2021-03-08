@@ -1,7 +1,9 @@
 package com.wannistudio.wannimart.domain.member;
 
+import com.wannistudio.wannimart.config.jwt.Jwt;
 import com.wannistudio.wannimart.controller.member.JoinRequest;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -50,10 +52,10 @@ public class Member {
 
   private LocalDateTime createAt;
 
-  public static Member of(JoinRequest joinRequest) {
+  public static Member of(PasswordEncoder passwordEncoder, JoinRequest joinRequest) {
     return Member.builder()
             .account(joinRequest.getPrincipal())
-            .password(joinRequest.getCredential())
+            .password(passwordEncoder.encode(joinRequest.getCredential()))
             .name(joinRequest.getName())
             .email(new Email(joinRequest.getEmail()))
             .phoneNumber(joinRequest.getPhoneNumber())
@@ -66,14 +68,14 @@ public class Member {
   }
 
   // jwt 인증토큰 생성.
-  public String newApiToken() {
-    return "test";
+  public String newApiToken(Jwt jwt, String[] roles) {
+    Jwt.Claims claims = Jwt.Claims.of(id, name, account, email, roles);
+    return jwt.newToken(claims);
   }
 
-  public void login(String account, String password) {
-    System.out.println("try login");
-    System.out.println("account : " + account);
-    System.out.println("password : " + password);
+  public void login(PasswordEncoder passwordEncoder, String credentials) {
+    if(!passwordEncoder.matches(credentials, password))
+      throw new IllegalArgumentException("Bad credentials");
   }
 
   public void afterLoginSuccess() {
