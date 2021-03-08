@@ -1,9 +1,13 @@
 package com.wannistudio.wannimart.config.security;
 
+import com.wannistudio.wannimart.config.jwt.Jwt;
+import com.wannistudio.wannimart.config.jwt.JwtAuthenticationTokenFilter;
+import com.wannistudio.wannimart.config.jwt.JwtTokenConfigure;
 import com.wannistudio.wannimart.domain.common.Id;
 import com.wannistudio.wannimart.domain.member.Member;
 import com.wannistudio.wannimart.domain.member.Role;
 import com.wannistudio.wannimart.handler.EntryPointUnauthorizedHandler;
+import com.wannistudio.wannimart.handler.JwtAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +39,9 @@ import static org.apache.commons.lang3.math.NumberUtils.toLong;
 @RequiredArgsConstructor
 public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
+  private final Jwt jwt;
+  private final JwtTokenConfigure jwtTokenConfigure;
+  private final JwtAccessDeniedHandler accessDeniedHandler;
   private final EntryPointUnauthorizedHandler unauthorizedHandler;
 
   @Bean
@@ -61,6 +68,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
             .headers()
             .disable()
             .exceptionHandling()
+            .accessDeniedHandler(accessDeniedHandler)
             .authenticationEntryPoint(unauthorizedHandler)
             .and()
             .sessionManagement()
@@ -78,6 +86,14 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
             .formLogin()
             .disable()
     ;
+
+    http
+            .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+  }
+
+  @Bean
+  public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
+    return new JwtAuthenticationTokenFilter(jwtTokenConfigure.getHeader(), jwt);
   }
 
   @Bean

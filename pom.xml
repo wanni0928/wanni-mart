@@ -20,6 +20,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <undertow.version>2.2.3.Final</undertow.version>
         <commons.lang.version>3.11</commons.lang.version>
+        <java.jwt.version>3.12.0</java.jwt.version>
     </properties>
 
     <dependencies>
@@ -68,6 +69,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java.jwt.version}</version>
         </dependency>
 
         <dependency>
