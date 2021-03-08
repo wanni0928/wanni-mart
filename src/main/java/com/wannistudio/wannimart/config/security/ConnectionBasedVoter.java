@@ -1,5 +1,7 @@
 package com.wannistudio.wannimart.config.security;
 
+import com.wannistudio.wannimart.config.jwt.JwtAuthentication;
+import com.wannistudio.wannimart.config.jwt.JwtAuthenticationToken;
 import com.wannistudio.wannimart.domain.common.Id;
 import com.wannistudio.wannimart.domain.member.Member;
 import org.springframework.security.access.AccessDecisionVoter;
@@ -35,6 +37,18 @@ public class ConnectionBasedVoter implements AccessDecisionVoter<FilterInvocatio
 
 
     if (!requiresAuthorization(request)) {
+      return ACCESS_GRANTED;
+    }
+
+    if (!isAssignable(JwtAuthenticationToken.class, authentication.getClass())) {
+      return ACCESS_ABSTAIN;
+    }
+
+    JwtAuthentication jwtAuth = (JwtAuthentication) authentication.getPrincipal();
+    Id<Member, Long> targetId = obtainTargetId(request);
+
+    // 본인 자신
+    if (jwtAuth.id.equals(targetId)) {
       return ACCESS_GRANTED;
     }
 
