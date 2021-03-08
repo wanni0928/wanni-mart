@@ -4,8 +4,11 @@ import com.wannistudio.wannimart.controller.member.JoinRequest;
 import com.wannistudio.wannimart.domain.common.Id;
 import com.wannistudio.wannimart.domain.member.Email;
 import com.wannistudio.wannimart.domain.member.Member;
+import com.wannistudio.wannimart.exception.NotFoundException;
 import com.wannistudio.wannimart.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Transactional(readOnly = true)
 public class MemberService {
   private final MemberRepository memberRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Transactional
   public Member join(JoinRequest joinRequest) {
@@ -29,7 +33,7 @@ public class MemberService {
             "password length must be between 4 and 15 characters."
     );
 
-    Member member = Member.of(joinRequest);
+    Member member = Member.of(passwordEncoder, joinRequest);
 
     return memberRepository.save(member);
   }
@@ -38,8 +42,8 @@ public class MemberService {
   public Member login(String account, String password) {
     checkNotNull(password, "password must be provided.");
 
-    Member member = findByAccount(account).get();
-    member.login(account, password);
+    Member member = findByAccount(account).orElseThrow(() -> new NotFoundException(Member.class, account));
+    member.login(passwordEncoder, password);
     member.afterLoginSuccess();
     return member;
   }

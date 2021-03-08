@@ -1,6 +1,7 @@
 package com.wannistudio.wannimart.config.security;
 
 import com.wannistudio.wannimart.config.jwt.Jwt;
+import com.wannistudio.wannimart.config.jwt.JwtAuthenticationProvider;
 import com.wannistudio.wannimart.config.jwt.JwtAuthenticationTokenFilter;
 import com.wannistudio.wannimart.config.jwt.JwtTokenConfigure;
 import com.wannistudio.wannimart.domain.common.Id;
@@ -8,13 +9,16 @@ import com.wannistudio.wannimart.domain.member.Member;
 import com.wannistudio.wannimart.domain.member.Role;
 import com.wannistudio.wannimart.handler.EntryPointUnauthorizedHandler;
 import com.wannistudio.wannimart.handler.JwtAccessDeniedHandler;
+import com.wannistudio.wannimart.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,7 +42,6 @@ import static org.apache.commons.lang3.math.NumberUtils.toLong;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
-
   private final Jwt jwt;
   private final JwtTokenConfigure jwtTokenConfigure;
   private final JwtAccessDeniedHandler accessDeniedHandler;
@@ -51,7 +54,17 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(WebSecurity web) {
-    web.ignoring().antMatchers("/swagger-resources", "/webjars/**", "/static/**", "/templates/**");
+    web.ignoring().antMatchers("/swagger-resources", "/webjars/**", "/static/**", "/templates/**", "/h2/**");
+  }
+
+  @Autowired
+  public void configureAuthentication(AuthenticationManagerBuilder builder, JwtAuthenticationProvider authenticationProvider) {
+    builder.authenticationProvider(authenticationProvider);
+  }
+
+  @Bean
+  public JwtAuthenticationProvider jwtAuthenticationProvider(Jwt jwt, MemberService memberService) {
+    return new JwtAuthenticationProvider(jwt, memberService);
   }
 
   @Bean

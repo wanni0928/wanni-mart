@@ -2,6 +2,12 @@ spring:
   profiles:
     active: local
 
+jwt:
+  token:
+    header: api_key
+    issuer: wanni_market
+    clientSecret: Rel3Bjce2MajBo09qgkNgYaTuzvJe8iwnBFhsDS5
+    expirySeconds: 6000
 ---
 #local 환경
 spring:
