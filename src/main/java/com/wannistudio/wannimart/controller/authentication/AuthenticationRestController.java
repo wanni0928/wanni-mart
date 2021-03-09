@@ -5,6 +5,8 @@ import com.wannistudio.wannimart.controller.AuthenticationRequest;
 import com.wannistudio.wannimart.controller.AuthenticationResult;
 import com.wannistudio.wannimart.controller.api.ApiResult;
 import com.wannistudio.wannimart.exception.UnauthorizedException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -20,10 +22,12 @@ import static com.wannistudio.wannimart.controller.api.ApiResult.OK;
 @RestController
 @RequestMapping("api/auth")
 @RequiredArgsConstructor
+@Api(tags = "인증 APIs")
 public class AuthenticationRestController {
   private final AuthenticationManager authenticationManager;
 
   @PostMapping
+  @ApiOperation(value = "사용자 로그인 (API 토큰 필요없음)")
   public ApiResult<AuthenticationResultDto> authentication(@RequestBody AuthenticationRequest authenticationRequest) throws UnauthorizedException {
 
     try {
