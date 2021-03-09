@@ -1,5 +1,6 @@
 package com.wannistudio.wannimart.controller.api;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,9 +10,16 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Getter
 public class ApiResult<T> {
+
+  @ApiModelProperty(value = "API 요청 처리 결과", required = true)
   private final boolean success;
+
+  @ApiModelProperty(value = "success가 true라면, API 요청 처리 응답값")
   private final T response;
+
+  @ApiModelProperty(value = "success가 false라면, API 요청 처리 응답값")
   private final ApiError error;
+
   public static <T> ApiResult<T> OK(T response) {
     return new ApiResult<>(true, response, null);
   }
