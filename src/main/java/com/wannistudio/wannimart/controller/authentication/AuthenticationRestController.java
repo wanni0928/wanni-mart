@@ -39,7 +39,6 @@ public class AuthenticationRestController {
               new AuthenticationResultDto((AuthenticationResult) authentication.getDetails())
       );
     } catch (AuthenticationException e) {
-      System.out.println(e.getMessage());
       throw new UnauthorizedException(e.getMessage());
     }
   }
