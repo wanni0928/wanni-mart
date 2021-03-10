@@ -53,13 +53,9 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
           long exp = claims.exp();
           long remain = System.currentTimeMillis() - exp;
 
-          System.out.println(remain);
-
           if (canRefresh(claims, 6000 * 10)) {
-            System.out.println("try refresh");
             String refreshToken = jwt.refreshToken(authorizationToken);
             response.setHeader(headerKey, refreshToken);
-            System.out.println(refreshToken);
           }
 
           Long userKey = claims.userKey;
@@ -79,7 +75,6 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
         }
       }
     }  else {
-      System.out.println(request.getHeader("User-Agent"));
       logger.debug("SecurityContextHolder not populated with security token, as it already contained: '{}'",
               SecurityContextHolder.getContext().getAuthentication());
     }
