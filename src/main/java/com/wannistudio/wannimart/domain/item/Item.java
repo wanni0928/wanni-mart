@@ -1,18 +1,22 @@
 package com.wannistudio.wannimart.domain.item;
 
-import com.wannistudio.wannimart.domain.connect.CategoryItem;
-import lombok.Getter;
-import lombok.Setter;
+import com.wannistudio.wannimart.domain.connect.ItemCategory;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+//@Builder
 public abstract class Item {
   @Id
   @GeneratedValue
@@ -40,10 +44,14 @@ public abstract class Item {
   private PackageType packageType;
 
   @OneToMany(mappedBy = "item")
-  private List<CategoryItem> categoryItems = new ArrayList<>();
+  private Set<ItemCategory> categoryItems = new HashSet<>();
+
+  public void addItemCategory(ItemCategory categoryItem) {
+    categoryItems.add(categoryItem);
+    categoryItem.setItem(this);
+  }
 
   public void removeStock(int count) {
 
   }
 }
-

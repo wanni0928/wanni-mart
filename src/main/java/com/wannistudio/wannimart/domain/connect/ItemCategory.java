@@ -8,13 +8,12 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
-public class CategoryItem {
+@Setter
+@NoArgsConstructor
+public class ItemCategory {
   @Id
   @GeneratedValue
-  @Column(name = "category_item_id")
+  @Column(name = "item_category_id")
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -24,4 +23,13 @@ public class CategoryItem {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id")
   private Category category;
+
+  private String description;
+
+  public static ItemCategory createItemCategory(Category category, String desc) {
+    ItemCategory categoryItem = new ItemCategory();
+    categoryItem.setCategory(category);
+//    categoryItem.setDesc(desc);
+    return categoryItem;
+  }
 }
