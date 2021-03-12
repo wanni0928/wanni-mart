@@ -22,7 +22,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
