@@ -61,6 +61,7 @@ public abstract class Item {
   public static Item from(ItemRequest itemRequest) {
     switch (itemRequest.getCategoryName()) {
       case "식품" :
+      case "정육" :
         return createFood(itemRequest);
       case "상품" :
         return createGoods(itemRequest);
@@ -84,7 +85,6 @@ public abstract class Item {
             .allergyInformation(itemRequest.getAllergyInformation())
             .expiration(itemRequest.getExpiration())
             .build();
-    System.out.println("namemememememem : " + build.getName());
     return build;
   }
 
@@ -105,8 +105,6 @@ public abstract class Item {
   }
 
   public void addItemCategory(ItemCategory categoryItem) {
-    System.out.println("Item.addItemCategory : " + categoryItem.getItem().getName());
-    System.out.println("Item.addItemCategory : " + categoryItems);
     categoryItems.add(categoryItem);
     categoryItem.setItem(this);
   }

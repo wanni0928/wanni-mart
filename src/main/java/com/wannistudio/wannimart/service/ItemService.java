@@ -29,7 +29,6 @@ public class ItemService {
   @Transactional
   public Item saveItem(ItemRequest itemRequest) {
     Item from = Item.from(itemRequest);
-    System.out.println("from : " + from.getName());
     return itemRepository.save(from);
   }
 
@@ -46,12 +45,7 @@ public class ItemService {
     item.addItemCategory(itemCategory);
     category.addItemCategory(itemCategory);
 
-
-
-    final ItemCategory save = categoryItemRepository.save(itemCategory);
-    System.out.println("ItemService.addCategory : " + save.getId());
-    System.out.println("ItemService.addCategory : " + save.getItem().getName());
-
+    categoryItemRepository.save(itemCategory);
 
   }
 
