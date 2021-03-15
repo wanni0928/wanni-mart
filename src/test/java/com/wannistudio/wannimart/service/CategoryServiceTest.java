@@ -61,12 +61,8 @@ class CategoryServiceTest {
     categoryService.saveChildCategory(parent.getId(), child);
 
     final List<Category> children = categoryService.findById(parent.getId()).getChildren();
-    for (Category category : children) {
-      System.out.println("parent's child : " + category.getName());
-    }
 
     final Category byId = categoryService.findById(2L);
-    System.out.println("ffffffffffffffffffffff : " + byId.getParent().getName());
 
     // then
     assertThat(children.size()).isEqualTo(4);
