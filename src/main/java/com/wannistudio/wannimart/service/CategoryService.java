@@ -18,6 +18,10 @@ public class CategoryService {
     return categoryRepository.findById(id).orElseThrow(NullPointerException::new);
   }
 
+  public Category findByCategoryName(String categoryName) {
+    return categoryRepository.findCategoryByName(categoryName);
+  }
+
   @Transactional
   public Category saveParentCategory(Category category) {
     return categoryRepository.save(category);
