@@ -7,6 +7,7 @@ import com.wannistudio.wannimart.domain.item.Item;
 import com.wannistudio.wannimart.domain.item.PackageType;
 import com.wannistudio.wannimart.repository.category.CategoryRepository;
 import com.wannistudio.wannimart.repository.item.ItemRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,7 +57,7 @@ class ItemServiceTest {
   @Test
   void createItem() {
 
-        // given
+    // given
     Category category = new Category();
     category.setName("식품");
     Category parent = categoryService.saveParentCategory(category);
@@ -90,9 +91,9 @@ class ItemServiceTest {
     food.setAllergyInformation("없음");
     food.setExpiration("사실 이미 좀 상함...");
 
-    Item saveItem = itemService.saveItem(food);
+//    Item saveItem = itemService.saveItem(food);
 
-    itemService.addCategory(saveItem.getId(), child1.getId(), "ㅈㅈ");
+//    itemService.addCategory(saveItem.getId(), parent.getId());
   }
 
 }

@@ -24,12 +24,9 @@ public class ItemCategory {
   @JoinColumn(name = "category_id")
   private Category category;
 
-  private String description;
-
   public static ItemCategory createItemCategory(Category category, String desc) {
     ItemCategory categoryItem = new ItemCategory();
     categoryItem.setCategory(category);
-//    categoryItem.setDesc(desc);
     return categoryItem;
   }
 }

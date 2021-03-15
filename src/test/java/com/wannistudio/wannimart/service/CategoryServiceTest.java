@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+@Rollback(value = false)
 class CategoryServiceTest {
   @Autowired
   CategoryService categoryService;
@@ -63,6 +64,9 @@ class CategoryServiceTest {
     for (Category category : children) {
       System.out.println("parent's child : " + category.getName());
     }
+
+    final Category byId = categoryService.findById(2L);
+    System.out.println("ffffffffffffffffffffff : " + byId.getParent().getName());
 
     // then
     assertThat(children.size()).isEqualTo(4);

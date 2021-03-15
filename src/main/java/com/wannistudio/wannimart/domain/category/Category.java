@@ -1,5 +1,6 @@
 package com.wannistudio.wannimart.domain.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wannistudio.wannimart.domain.connect.ItemCategory;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Category {
   private String name;
 
   @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+  @JsonIgnore
   private Set<ItemCategory> categoryItems = new HashSet<>();
 
   /*셀프 연관관계*/
@@ -30,6 +32,7 @@ public class Category {
   private Category parent;
 
   @OneToMany(mappedBy = "parent")
+  @JsonIgnore
   private List<Category> children = new ArrayList<>();
 
   /*연관관계 메소드드*/
