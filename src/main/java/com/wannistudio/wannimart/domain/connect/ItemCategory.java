@@ -24,7 +24,7 @@ public class ItemCategory {
   @JoinColumn(name = "category_id")
   private Category category;
 
-  public static ItemCategory createItemCategory(Category category, String desc) {
+  public static ItemCategory createItemCategory(Category category) {
     ItemCategory categoryItem = new ItemCategory();
     categoryItem.setCategory(category);
     return categoryItem;
