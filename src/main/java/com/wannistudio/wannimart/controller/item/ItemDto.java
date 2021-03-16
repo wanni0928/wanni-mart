@@ -1,7 +1,9 @@
 package com.wannistudio.wannimart.controller.item;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.wannistudio.wannimart.domain.connect.ItemCategory;
 import com.wannistudio.wannimart.domain.item.DeliveryType;
+import com.wannistudio.wannimart.domain.item.Item;
 import com.wannistudio.wannimart.domain.item.PackageType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,41 +15,18 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ItemDto {
-  private Long id;
+  private Item item;
+  private Set<ItemCategoryDto> categoryItems;
 
-  private String name;
-
-  private String summary;
-
-  private int price;
-
-  private int stockQuantity;
-
-  private String unit;
-
-  private String volume;
-
-  private String description;
-
-  private DeliveryType deliveryType;
-
-  private PackageType packageType;
-
-  // food
-  private String importFrom;
-
-  private String allergyInformation;
-
-  private String expiration;
-
-  // goods
-  private String size;
-
-  private String material;
+  public ItemDto(Item item) {
+    this.item = item;
+    this.categoryItems = item.getCategoryItems()
+            .stream()
+            .map(ItemCategoryDto::new)
+            .collect(Collectors.toSet());
+  }
 }

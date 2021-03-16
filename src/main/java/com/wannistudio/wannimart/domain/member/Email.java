@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Embeddable
 @NoArgsConstructor
 public class Email {
+    @Column(unique = true)
     private String email;
 
     public Email(String email) {

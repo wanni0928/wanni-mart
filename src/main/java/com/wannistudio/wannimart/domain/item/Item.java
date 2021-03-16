@@ -41,7 +41,7 @@ public abstract class Item {
   @Enumerated(EnumType.STRING)
   private PackageType packageType;
 
-  @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
   @JsonIgnore
   private Set<ItemCategory> categoryItems = new HashSet<>();
 
@@ -71,7 +71,7 @@ public abstract class Item {
   }
 
   private static Food createFood(ItemRequest itemRequest) {
-    final Food build = Food.builder()
+    return Food.builder()
             .name(itemRequest.getItemName())
             .summary(itemRequest.getSummary())
             .price(itemRequest.getPrice())
@@ -85,7 +85,6 @@ public abstract class Item {
             .allergyInformation(itemRequest.getAllergyInformation())
             .expiration(itemRequest.getExpiration())
             .build();
-    return build;
   }
 
   private static Goods createGoods(ItemRequest itemRequest) {
