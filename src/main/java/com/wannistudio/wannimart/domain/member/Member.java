@@ -2,11 +2,14 @@ package com.wannistudio.wannimart.domain.member;
 
 import com.wannistudio.wannimart.config.jwt.Jwt;
 import com.wannistudio.wannimart.controller.member.JoinRequest;
+import com.wannistudio.wannimart.domain.Order;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static java.time.LocalDateTime.now;
@@ -52,6 +55,9 @@ public class Member {
   private LocalDateTime lastLoginAt;
 
   private LocalDateTime createAt;
+
+  @OneToMany(mappedBy = "member")
+  private List<Order> orders = new ArrayList<>();
 
   public static Member of(PasswordEncoder passwordEncoder, JoinRequest joinRequest) {
     return Member.builder()
