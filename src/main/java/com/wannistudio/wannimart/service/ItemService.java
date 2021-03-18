@@ -1,6 +1,7 @@
 package com.wannistudio.wannimart.service;
 
 import com.wannistudio.wannimart.controller.item.ItemRequest;
+import com.wannistudio.wannimart.controller.item.ItemSearch;
 import com.wannistudio.wannimart.domain.category.Category;
 import com.wannistudio.wannimart.domain.connect.ItemCategory;
 import com.wannistudio.wannimart.domain.connect.ItemCategoryQueryDto;
@@ -69,7 +70,11 @@ public class ItemService {
     return itemRepository.findAllWithCategory(offset, limit);
   }
 
-  public List<ItemCategoryQueryDto> findAllItemCategory(int offset, int limit) {
-    return itemRepository.findAllWithItemCategory(offset, limit);
+  public List<ItemCategoryQueryDto> findAllItemCategory(int offset, int limit , ItemSearch itemSearch) {
+    return itemRepository.findAllWithItemCategory(offset, limit, itemSearch);
+  }
+
+  public Page<ItemCategoryQueryDto> findAllItemCategoryWithPage(Pageable pageable, ItemSearch itemSearch) {
+    return itemRepository.findAllWithPageableItemCategory(pageable, itemSearch);
   }
 }

@@ -2,7 +2,7 @@ package com.wannistudio.wannimart.domain.member;
 
 import com.wannistudio.wannimart.config.jwt.Jwt;
 import com.wannistudio.wannimart.controller.member.JoinRequest;
-import com.wannistudio.wannimart.domain.Order;
+import com.wannistudio.wannimart.domain.order.Order;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

@@ -3,6 +3,7 @@ package com.wannistudio.wannimart.domain.item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wannistudio.wannimart.controller.item.ItemRequest;
 import com.wannistudio.wannimart.domain.connect.ItemCategory;
+import com.wannistudio.wannimart.exception.NotEnoughStockException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -108,7 +109,15 @@ public abstract class Item {
     categoryItem.setItem(this);
   }
 
-  public void removeStock(int count) {
-
+  public void removeStock(int quantity) {
+    int restStock = this.stockQuantity - quantity;
+    if(restStock < 0) {
+      throw new NotEnoughStockException("need more stock");
+    }
+    this.stockQuantity = restStock;
   }
+
+  public void addStock(int quantity) {
+    this.stockQuantity += quantity;
+  };
 }
