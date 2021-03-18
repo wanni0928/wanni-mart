@@ -1,7 +1,7 @@
 package com.wannistudio.wannimart.domain.connect;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wannistudio.wannimart.domain.Order;
+import com.wannistudio.wannimart.domain.order.Order;
 import com.wannistudio.wannimart.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -41,5 +41,14 @@ public class OrderItem {
 
     item.removeStock(count);
     return orderItem;
+  }
+
+  // 비즈니스 로직
+  public void cancel() {
+    getItem().addStock(count); // 취소된 상품의 재고를 원복 해준다.
+  }
+
+  public int getTotalPrice() {
+    return getOrderPrice() * getCount();
   }
 }

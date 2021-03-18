@@ -2,9 +2,11 @@ package com.wannistudio.wannimart.repository.item;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wannistudio.wannimart.controller.item.ItemDto;
+import com.wannistudio.wannimart.controller.item.ItemSearch;
 import com.wannistudio.wannimart.controller.item.QItemDto;
 import com.wannistudio.wannimart.domain.category.QCategory;
 import com.wannistudio.wannimart.domain.connect.ItemCategoryQueryDto;
@@ -14,9 +16,11 @@ import com.wannistudio.wannimart.domain.item.Item;
 import com.wannistudio.wannimart.domain.item.QFood;
 import com.wannistudio.wannimart.domain.item.QGoods;
 import com.wannistudio.wannimart.domain.item.QItem;
+import com.wannistudio.wannimart.domain.order.OrderStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 
@@ -28,6 +32,8 @@ import static com.wannistudio.wannimart.domain.connect.QItemCategory.*;
 import static com.wannistudio.wannimart.domain.item.QFood.*;
 import static com.wannistudio.wannimart.domain.item.QGoods.*;
 import static com.wannistudio.wannimart.domain.item.QItem.*;
+import static com.wannistudio.wannimart.domain.member.QMember.member;
+import static com.wannistudio.wannimart.domain.order.QOrder.order;
 
 public class ItemRepositoryCustomQueryImpl implements ItemRepositoryCustomQuery {
 
@@ -71,7 +77,7 @@ public class ItemRepositoryCustomQueryImpl implements ItemRepositoryCustomQuery 
   }
 
   @Override
-  public List<ItemCategoryQueryDto> findAllWithItemCategory(int offset, int limit) {
+  public List<ItemCategoryQueryDto> findAllWithItemCategory(int offset, int limit, ItemSearch itemSearch) {
     return queryFactory
             .select(Projections.constructor(ItemCategoryQueryDto.class,
                     itemCategory.id,
@@ -93,9 +99,54 @@ public class ItemRepositoryCustomQueryImpl implements ItemRepositoryCustomQuery 
             .join(category).on(itemCategory.category.id.eq(category.id))
             .offset(offset)
             .limit(limit)
+            .where(itemNameLike(itemSearch.getItemName()), categoryNameLike(itemSearch.getCategoryName()))
             .orderBy(itemCategory.id.desc())
             .fetchResults()
             .getResults();
   }
 
+  @Override
+  public Page<ItemCategoryQueryDto> findAllWithPageableItemCategory(Pageable pageable, ItemSearch itemSearch) {
+    final QueryResults<ItemCategoryQueryDto> results = queryFactory
+            .select(new QItemCategoryQueryDto(
+                            itemCategory.id,
+                            item.name,
+                            item.deliveryType,
+                            item.packageType,
+                            item.price,
+                            item.stockQuantity,
+                            item.summary,
+                            item.unit,
+                            item.volume,
+                            food.allergyInformation,
+                            food.expiration,
+                            food.importFrom,
+                            goods.material,
+                            goods.size,
+                            category.name
+                    )).from(itemCategory)
+            .join(item).on(itemCategory.item.id.eq(item.id))
+            .join(category).on(itemCategory.category.id.eq(category.id))
+            .where(itemNameLike(itemSearch.getItemName()), categoryNameLike(itemSearch.getCategoryName()))
+            .orderBy(itemCategory.id.desc())
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchResults();
+
+    final List<ItemCategoryQueryDto> content = results.getResults();
+
+    return new PageImpl<>(content, pageable, results.getTotal());
+  }
+
+  private BooleanExpression itemNameLike(String nameCond) {
+    System.out.println("ItemRepositoryCustomQueryImpl.itemNameLike : " + nameCond);
+    if (!StringUtils.hasText(nameCond)) return null;
+    return item.name.like(nameCond);
+  }
+
+  private BooleanExpression categoryNameLike(String nameCond) {
+    System.out.println("ItemRepositoryCustomQueryImpl.categoryNameLike : " + nameCond);
+    if (!StringUtils.hasText(nameCond)) return null;
+    return category.name.like(nameCond);
+  }
 }

@@ -1,6 +1,7 @@
 package com.wannistudio.wannimart.repository.item;
 
 import com.wannistudio.wannimart.controller.item.ItemDto;
+import com.wannistudio.wannimart.controller.item.ItemSearch;
 import com.wannistudio.wannimart.domain.connect.ItemCategoryQueryDto;
 import com.wannistudio.wannimart.domain.item.Item;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,6 @@ public interface ItemRepositoryCustomQuery {
   Page<Item> findAllSimple(Pageable pageable);
   Page<ItemCategoryQueryDto> findAllAdvanced(Pageable pageable);
   List<Item> findAllWithCategory(int offset, int limit);
-
-  List<ItemCategoryQueryDto> findAllWithItemCategory(int offset, int limit);
+  List<ItemCategoryQueryDto> findAllWithItemCategory(int offset, int limit, ItemSearch itemSearch);
+  Page<ItemCategoryQueryDto> findAllWithPageableItemCategory(Pageable pageable, ItemSearch itemSearch);
 }

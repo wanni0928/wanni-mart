@@ -61,7 +61,12 @@ public class ItemRestController {
 
   @GetMapping("/item/v3/list")
   public ApiResult<List<ItemCategoryQueryDto>> itemsV3(@RequestParam(value = "offset", defaultValue = "0") int offset,
-                                        @RequestParam(value = "limit", defaultValue = "20") int limit) {
-    return OK(itemService.findAllItemCategory(offset, limit));
+                                        @RequestParam(value = "limit", defaultValue = "20") int limit, ItemSearch itemSearch) {
+    return OK(itemService.findAllItemCategory(offset, limit, itemSearch));
+  }
+
+  @GetMapping("/item/v4/list")
+  public ApiResult<Page<ItemCategoryQueryDto>> itemsV4(Pageable pageable, ItemSearch itemSearch) {
+    return OK(itemService.findAllItemCategoryWithPage(pageable, itemSearch));
   }
 }
