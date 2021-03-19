@@ -30,4 +30,9 @@ public class OrderController {
   public ApiResult<List<OrderQueryDto>> orders() {
     return OK(orderService.findAllOrderQueryDto());
   }
+
+  @PostMapping(value = "/orders/{orderId}/cancel")
+  public ApiResult<Order> cancelOrder(@PathVariable("orderId") Long orderId) {
+    return OK(orderService.cancelOrder(orderId));
+  }
 }
