@@ -56,11 +56,12 @@ public class OrderService {
 
   //취소
   @Transactional
-  public void cancelOrder(Long orderId) {
+  public Order cancelOrder(Long orderId) {
     // 주문 엔티티 조회
     Order order = orderRepository.findById(orderId).orElseThrow(NullPointerException::new);
     // 주문 취소
     order.cancel();
+    return order;
   }
 
   //주문 검색
