@@ -1,5 +1,6 @@
 package com.wannistudio.wannimart.service;
 
+import com.wannistudio.wannimart.controller.order.OrderQueryDto;
 import com.wannistudio.wannimart.domain.order.Order;
 import com.wannistudio.wannimart.domain.connect.OrderItem;
 import com.wannistudio.wannimart.domain.delivery.Delivery;
@@ -24,9 +25,14 @@ public class OrderService {
   private final MemberRepository memberRepository;
   private final ItemRepository itemRepository;
 
+  @Transactional
+  public List<OrderQueryDto> findAllOrderQueryDto() {
+    return orderRepository.findOrderQueryDtos();
+  }
+
   //주문
   @Transactional
-  public Long order(Long memberId, Long itemId, int count) {
+  public Order order(Long memberId, Long itemId, int count) {
 
     // 엔티티 조회
     Member member = memberRepository.findById(memberId).orElseThrow(NullPointerException::new);
@@ -45,7 +51,7 @@ public class OrderService {
     // 주문 저장
     orderRepository.save(order);
 
-    return order.getId();
+    return order;
   }
 
   //취소

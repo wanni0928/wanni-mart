@@ -2,6 +2,13 @@ package com.wannistudio.wannimart.repository.order;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.wannistudio.wannimart.controller.order.OrderItemQueryDto;
+import com.wannistudio.wannimart.controller.order.OrderQueryDto;
+import com.wannistudio.wannimart.controller.order.QOrderItemQueryDto;
+import com.wannistudio.wannimart.controller.order.QOrderQueryDto;
+import com.wannistudio.wannimart.domain.connect.QOrderItem;
+import com.wannistudio.wannimart.domain.delivery.QDelivery;
+import com.wannistudio.wannimart.domain.item.QItem;
 import com.wannistudio.wannimart.domain.member.QMember;
 import com.wannistudio.wannimart.domain.order.Order;
 import com.wannistudio.wannimart.domain.order.OrderStatus;
@@ -10,9 +17,16 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import static com.wannistudio.wannimart.domain.connect.QOrderItem.*;
+import static com.wannistudio.wannimart.domain.delivery.QDelivery.*;
+import static com.wannistudio.wannimart.domain.item.QItem.*;
 import static com.wannistudio.wannimart.domain.member.QMember.*;
 import static com.wannistudio.wannimart.domain.order.QOrder.*;
+import static java.util.stream.Collectors.*;
 
 public class OrderRepositoryCustomQueryImpl implements OrderRepositoryCustomQuery {
 
@@ -32,6 +46,46 @@ public class OrderRepositoryCustomQueryImpl implements OrderRepositoryCustomQuer
             ;
   }
 
+  @Override
+  public List<OrderQueryDto> findOrderQueryDtos() {
+
+    List<OrderQueryDto> result = findOrders();
+
+    List<Long> orderIds = result.stream().map(
+            OrderQueryDto::getId
+    ).collect(toList());
+
+    List<OrderItemQueryDto> orderItems = findOrderItems(orderIds);
+
+    Map<Long, List<OrderItemQueryDto>> orderItemMap = orderItems
+            .stream()
+            .collect(
+                    groupingBy(OrderItemQueryDto::getOrderId)
+            );
+
+    result.forEach(orderQueryDto -> orderQueryDto.setOrderItems(orderItemMap.get(orderQueryDto.getId())));
+
+    return result;
+  }
+
+  private List<OrderItemQueryDto> findOrderItems(List<Long> orderIds) {
+    return queryFactory.select(
+            new QOrderItemQueryDto(orderItem.order.id, item.name, orderItem.orderPrice, orderItem.count)
+    ).from(orderItem)
+            .join(orderItem.item, item)
+            .where(orderItem.order.id.in(orderIds))
+            .fetch();
+  }
+
+  private List<OrderQueryDto> findOrders() {
+    return queryFactory.select(
+            new QOrderQueryDto(order.id, member.name, order.orderDate, order.status, delivery.address)
+    ).from(order)
+            .join(order.member, member)
+            .join(order.delivery, delivery)
+            .fetch();
+  }
+
   private BooleanExpression nameLike(String nameCond) {
     if (!StringUtils.hasText(nameCond)) {
       return null;
@@ -40,7 +94,7 @@ public class OrderRepositoryCustomQueryImpl implements OrderRepositoryCustomQuer
   }
 
   private BooleanExpression statusEq(OrderStatus statusCond) {
-    if(statusCond == null) {
+    if (statusCond == null) {
       return null;
     }
     return order.status.eq(statusCond);
