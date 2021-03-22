@@ -20,6 +20,8 @@ public class ItemRequest {
 
   private String itemName;
 
+  private String parentCategoryName;
+
   private String categoryName;
 
   private String summary;

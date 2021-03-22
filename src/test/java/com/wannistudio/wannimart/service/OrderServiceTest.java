@@ -86,7 +86,7 @@ class OrderServiceTest {
   @Test
   void findAllOrders() {
     // given
-    final Member testMember0 = memberRepository.findById(5L).orElseThrow(NullPointerException::new);
+    final Member testMember0 = memberService.join(createTestMemberJoinRequest("testMember0"));
     final Member testMember1 = memberService.join(createTestMemberJoinRequest("testMember1"));
     final Member testMember2 = memberService.join(createTestMemberJoinRequest("testMember2"));
     final Member testMember3 = memberService.join(createTestMemberJoinRequest("testMember3"));
@@ -150,7 +150,7 @@ class OrderServiceTest {
             .principal(principal)
             .credential("12345")
             .name("와니")
-            .email("wanni@gmail.com")
+            .email(principal + "@gmail.com")
             .phoneNumber("010-1111-2222")
             .cityStreetAddress("서울")
             .residentAddress("어딘가")

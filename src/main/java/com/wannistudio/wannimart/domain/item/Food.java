@@ -3,6 +3,7 @@ package com.wannistudio.wannimart.domain.item;
 import com.wannistudio.wannimart.domain.connect.ItemCategory;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.Set;
@@ -13,8 +14,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class Food extends Item {
+
   private String importFrom;
+
   private String allergyInformation;
+
   private String expiration;
 
   @Builder

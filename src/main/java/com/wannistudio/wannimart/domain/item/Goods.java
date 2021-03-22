@@ -3,6 +3,7 @@ package com.wannistudio.wannimart.domain.item;
 import com.wannistudio.wannimart.domain.connect.ItemCategory;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.Set;
@@ -13,7 +14,9 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class Goods extends Item {
+
   private String size;
+
   private String material;
 
   @Builder

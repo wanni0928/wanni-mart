@@ -12,8 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ItemCategory {
   @Id
-  @GeneratedValue
-  @Column(name = "item_category_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "item_category_id", nullable = false)
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
