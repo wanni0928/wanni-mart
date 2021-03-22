@@ -1,5 +1,6 @@
 package com.wannistudio.wannimart.repository.order;
 
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wannistudio.wannimart.controller.order.OrderItemQueryDto;
@@ -47,9 +48,9 @@ public class OrderRepositoryCustomQueryImpl implements OrderRepositoryCustomQuer
   }
 
   @Override
-  public List<OrderQueryDto> findOrderQueryDtos() {
+  public List<OrderQueryDto> findOrderQueryDtos(OrderSearch orderSearch) {
 
-    List<OrderQueryDto> result = findOrders();
+    List<OrderQueryDto> result = findOrders(orderSearch);
 
     List<Long> orderIds = result.stream().map(
             OrderQueryDto::getId
@@ -77,13 +78,19 @@ public class OrderRepositoryCustomQueryImpl implements OrderRepositoryCustomQuer
             .fetch();
   }
 
-  private List<OrderQueryDto> findOrders() {
+  private List<OrderQueryDto> findOrders(OrderSearch orderSearch) {
     return queryFactory.select(
             new QOrderQueryDto(order.id, member.name, order.orderDate, order.status, delivery.address)
     ).from(order)
+            .where(pkLike(orderSearch.getOrderId()))
             .join(order.member, member)
             .join(order.delivery, delivery)
             .fetch();
+  }
+
+  private Predicate pkLike(Long orderId) {
+    if(orderId == null) return null;
+    return order.id.eq(orderId);
   }
 
   private BooleanExpression nameLike(String nameCond) {

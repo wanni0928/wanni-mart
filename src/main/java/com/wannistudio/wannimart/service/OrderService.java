@@ -25,9 +25,8 @@ public class OrderService {
   private final MemberRepository memberRepository;
   private final ItemRepository itemRepository;
 
-  @Transactional
-  public List<OrderQueryDto> findAllOrderQueryDto() {
-    return orderRepository.findOrderQueryDtos();
+  public List<OrderQueryDto> findAllOrderQueryDto(OrderSearch orderSearch) {
+    return orderRepository.findOrderQueryDtos(orderSearch);
   }
 
   //주문
