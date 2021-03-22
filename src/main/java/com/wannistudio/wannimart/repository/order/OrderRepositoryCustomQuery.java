@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface OrderRepositoryCustomQuery {
   List<Order> findAll(OrderSearch orderSearch);
-  List<OrderQueryDto> findOrderQueryDtos();
+  List<OrderQueryDto> findOrderQueryDtos(OrderSearch orderSearch);
 }
