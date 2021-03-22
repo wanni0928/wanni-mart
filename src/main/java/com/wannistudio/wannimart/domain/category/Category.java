@@ -2,7 +2,9 @@ package com.wannistudio.wannimart.domain.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wannistudio.wannimart.domain.connect.ItemCategory;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,13 +15,14 @@ import java.util.Set;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
   @Id
-  @GeneratedValue
-  @Column(name = "category_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "category_id", nullable = false)
   private Long id;
 
+  @Column(nullable = false)
   private String name;
 
   @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
@@ -34,6 +37,14 @@ public class Category {
   @OneToMany(mappedBy = "parent")
   @JsonIgnore
   private List<Category> children = new ArrayList<>();
+
+  public Category(String name) {
+    this.name = name;
+  }
+
+  public void setParent(Category parent) {
+    this.parent = parent;
+  }
 
   /*연관관계 메소드드*/
   public void addChildCategory(Category child) {

@@ -26,30 +26,39 @@ public class Member {
   @Column(name = "member_id")
   private Long id;
 
-  @Column(unique = true)
+  @Column(unique = true, nullable = false)
   private String account;
 
+  @Column(nullable = false)
   private String password;
 
+  @Column(nullable = false)
   private String name;
 
   @Embedded
+  @Column(nullable = false)
   private Email email;
 
+  @Column(nullable = false)
   private String phoneNumber;
 
   @Embedded
+  @Column(nullable = false)
   private Address address;
 
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   private Gender gender;
 
   @Embedded
+  @Column(nullable = false)
   private Birth birth;
 
   @Embedded
+  @Column(nullable = false)
   private Agreement agreement;
 
+  @Column(nullable = false)
   private int loginCount;
 
   private LocalDateTime lastLoginAt;

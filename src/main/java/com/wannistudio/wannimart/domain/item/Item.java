@@ -18,28 +18,37 @@ import java.util.Set;
 @NoArgsConstructor
 public abstract class Item {
   @Id
-  @GeneratedValue
-  @Column(name = "item_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "item_id", nullable = false)
   private Long id;
 
+  @Column(nullable = false)
   private String name;
 
+  @Column(nullable = false)
   private String summary;
 
+  @Column(nullable = false)
   private int price;
 
+  @Column(nullable = false)
   private int stockQuantity;
 
+  @Column(nullable = false)
   private String unit;
 
+  @Column(nullable = false)
   private String volume;
 
+  @Column(nullable = false)
   private String description;
 
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   private DeliveryType deliveryType;
 
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   private PackageType packageType;
 
   @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
@@ -60,11 +69,20 @@ public abstract class Item {
   }
 
   public static Item from(ItemRequest itemRequest) {
-    switch (itemRequest.getCategoryName()) {
-      case "식품" :
-      case "정육" :
+    switch (itemRequest.getParentCategoryName()) {
+      case "채소" :
+      case "과일" :
+      case "과자" :
+      case "축/농산물/수산물" :
+      case "간편식" :
+      case "양념" :
+      case "음료" :
+      case "헬스" :
+      case "베이커리" :
         return createFood(itemRequest);
-      case "상품" :
+      case "생활" :
+      case "전자" :
+      case "반려동물" :
         return createGoods(itemRequest);
       default:
         throw new IllegalStateException("Unexpected value: " + itemRequest.getCategoryName());

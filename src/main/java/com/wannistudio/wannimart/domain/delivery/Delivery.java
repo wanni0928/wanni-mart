@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Setter
 public class Delivery {
   @Id
-  @GeneratedValue
-  @Column(name = "delivery_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "delivery_id", nullable = false)
   private Long id;
 
   @JsonIgnore

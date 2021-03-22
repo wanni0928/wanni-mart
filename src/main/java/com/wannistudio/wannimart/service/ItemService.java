@@ -6,6 +6,7 @@ import com.wannistudio.wannimart.domain.category.Category;
 import com.wannistudio.wannimart.domain.connect.ItemCategory;
 import com.wannistudio.wannimart.domain.connect.ItemCategoryQueryDto;
 import com.wannistudio.wannimart.domain.item.Item;
+import com.wannistudio.wannimart.exception.NotFoundException;
 import com.wannistudio.wannimart.repository.category.CategoryRepository;
 import com.wannistudio.wannimart.repository.categoryitem.CategoryItemRepository;
 import com.wannistudio.wannimart.repository.item.ItemRepository;
@@ -14,8 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -35,8 +38,8 @@ public class ItemService {
 
   @Transactional
   public Item saveItem(ItemRequest itemRequest) {
-    Item from = Item.from(itemRequest);
-    return itemRepository.save(from);
+    Item item = Item.from(itemRequest);
+    return itemRepository.save(item);
   }
 
 
@@ -56,6 +59,13 @@ public class ItemService {
 
     categoryItemRepository.save(itemCategory);
 
+  }
+
+  @Transactional
+  public void addItemWithCategory(ItemRequest itemRequest) {
+    Item item = saveItem(itemRequest);
+    Category category = categoryService.findByCategoryName(itemRequest.getCategoryName());
+    addCategory(item.getId(), category.getId());
   }
 
   public void updateItem(Long itemId, String name, int price, int stockQuantity) {

@@ -30,6 +30,10 @@ public class CategoryService {
   @Transactional
   public void saveChildCategory(Long parentId, Category child) {
     final Optional<Category> parentCategory = categoryRepository.findById(parentId);
-    parentCategory.ifPresent(parent -> parent.addChildCategory(child));
+
+    parentCategory.ifPresent(parent -> {
+      final Category savedChild = categoryRepository.save(child);
+      parent.addChildCategory(savedChild);
+    });
   }
 }
