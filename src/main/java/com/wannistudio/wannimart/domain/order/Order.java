@@ -70,4 +70,8 @@ public class Order {
     this.setStatus(OrderStatus.CANCEL);
     orderItems.forEach(OrderItem::cancel);
   }
+
+  public int getTotalPrice() {
+    return orderItems.stream().mapToInt(OrderItem::getTotalPrice).sum();
+  }
 }
