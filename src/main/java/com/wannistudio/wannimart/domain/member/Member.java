@@ -1,5 +1,6 @@
 package com.wannistudio.wannimart.domain.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wannistudio.wannimart.config.jwt.Jwt;
 import com.wannistudio.wannimart.controller.member.JoinRequest;
 import com.wannistudio.wannimart.domain.order.Order;
@@ -29,6 +30,7 @@ public class Member {
   @Column(unique = true, nullable = false)
   private String account;
 
+  @JsonIgnore
   @Column(nullable = false)
   private String password;
 
