@@ -1,5 +1,6 @@
 package com.wannistudio.wannimart.service;
 
+import com.wannistudio.wannimart.controller.order.OrderItemQueryDto;
 import com.wannistudio.wannimart.controller.order.OrderQueryDto;
 import com.wannistudio.wannimart.domain.order.Order;
 import com.wannistudio.wannimart.domain.connect.OrderItem;
@@ -11,6 +12,8 @@ import com.wannistudio.wannimart.repository.member.MemberRepository;
 import com.wannistudio.wannimart.repository.order.OrderRepository;
 import com.wannistudio.wannimart.repository.order.OrderSearch;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,10 @@ public class OrderService {
 
   public List<OrderQueryDto> findAllOrderQueryDto(OrderSearch orderSearch) {
     return orderRepository.findOrderQueryDtos(orderSearch);
+  }
+
+  public Page<OrderItemQueryDto> findAllOrderItemQueryDto(OrderSearch orderSearch, Pageable pageable) {
+    return orderRepository.findOrderItemQueryDtos(orderSearch, pageable);
   }
 
   //주문
