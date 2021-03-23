@@ -1,5 +1,6 @@
 package com.wannistudio.wannimart.repository.order;
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -14,6 +15,9 @@ import com.wannistudio.wannimart.domain.member.QMember;
 import com.wannistudio.wannimart.domain.order.Order;
 import com.wannistudio.wannimart.domain.order.OrderStatus;
 import com.wannistudio.wannimart.domain.order.QOrder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -69,6 +73,27 @@ public class OrderRepositoryCustomQueryImpl implements OrderRepositoryCustomQuer
     return result;
   }
 
+  @Override
+  public Page<OrderItemQueryDto> findOrderItemQueryDtos(OrderSearch orderSearch, Pageable pageable) {
+
+    List<OrderQueryDto> result = findOrders(orderSearch);
+
+    List<Long> orderIds = result.stream().map(
+            OrderQueryDto::getId
+    ).collect(toList());
+
+    final QueryResults<OrderItemQueryDto> results = queryFactory.select(
+            new QOrderItemQueryDto(orderItem.order.id, item.name, orderItem.orderPrice, orderItem.count)
+    ).from(orderItem)
+            .join(orderItem.item, item)
+            .where(orderItem.order.id.in(orderIds))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchResults();
+
+    return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+  }
+
   private List<OrderItemQueryDto> findOrderItems(List<Long> orderIds) {
     return queryFactory.select(
             new QOrderItemQueryDto(orderItem.order.id, item.name, orderItem.orderPrice, orderItem.count)
@@ -77,6 +102,8 @@ public class OrderRepositoryCustomQueryImpl implements OrderRepositoryCustomQuer
             .where(orderItem.order.id.in(orderIds))
             .fetch();
   }
+
+
 
   private List<OrderQueryDto> findOrders(OrderSearch orderSearch) {
     return queryFactory.select(

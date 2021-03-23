@@ -12,6 +12,8 @@ import com.wannistudio.wannimart.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,12 @@ public class OrderController {
   @ApiOperation(value = "주문목록 조회 - 단순 주문목록")
   public ApiResult<List<OrderQueryDto>> orders() {
     return OK(orderService.findAllOrderQueryDto(new OrderSearch()));
+  }
+
+  @GetMapping(path = "/order/v2/list")
+  @ApiOperation(value = "주문목록 조회 - 페이징 처리 및 데이터 간소화")
+  public ApiResult<Page<OrderItemQueryDto>> orderItems(OrderSearch orderSearch, Pageable pageable) {
+    return OK(orderService.findAllOrderItemQueryDto(orderSearch, pageable));
   }
 
   @PostMapping(path = "/orders/{orderId}/cancel")
