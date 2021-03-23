@@ -57,7 +57,7 @@ class ItemServiceTest {
   void createItem() {
     ItemRequest itemRequest = ItemRequest.builder()
             .parentCategoryName("채소")
-            .categoryName("고구마,감자,당근")
+            .categoryName("고구마/감자,당근")
             .itemName("호박고구마")
             .summary("호.박.고.구.마")
             .price(10000)
