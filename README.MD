@@ -13,12 +13,16 @@
 - 문서화.
 - 리버스 프록시 기법과, 로드 밸런서.
 - 클라우드 서비스의 종류와 트레이드 오프.
-- 
 - JWT의 원리와 기존 회원 인증기법과 비교하여 발생하는 트레이드 오프.
 - Tomcat의 구조와 MessageQueue를 사용함으로서 얻는 이점.
 - 캐싱 서버가 필요한 이유.
 - 서버의 확장.
+- CI/CD가 필요한 이유
 - 비동기 서비스의 필요성.
 
 ## DB ERD
 ![DB ERD 구조](https://raw.githubusercontent.com/wanni0928/wannistudio_prototype/main/asset/img/wannimart_model.png)
+
+## 추후 진행사항
+- 결제관리 API
+- 배송관리 API
