@@ -139,13 +139,11 @@ public class ItemRepositoryCustomQueryImpl implements ItemRepositoryCustomQuery 
   }
 
   private BooleanExpression itemNameLike(String nameCond) {
-    System.out.println("ItemRepositoryCustomQueryImpl.itemNameLike : " + nameCond);
     if (!StringUtils.hasText(nameCond)) return null;
     return item.name.like(nameCond);
   }
 
   private BooleanExpression categoryNameLike(String nameCond) {
-    System.out.println("ItemRepositoryCustomQueryImpl.categoryNameLike : " + nameCond);
     if (!StringUtils.hasText(nameCond)) return null;
     return category.name.like(nameCond);
   }

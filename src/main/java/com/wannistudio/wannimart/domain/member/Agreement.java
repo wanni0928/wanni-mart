@@ -17,8 +17,12 @@ public class Agreement {
     private boolean isAdult;
 
     public Agreement(boolean termsOfUse, boolean personalInfoUsage, boolean marketingUsage, boolean isAdult) {
-        checkArgument(termsOfUse, "termsOfUse must be true");
-        checkArgument(personalInfoUsage, "termsOf personalInfoUsage must be true");
+        checkArgument(
+                termsOfUse == true,
+                "termsOfUse must be true");
+        checkArgument(
+                personalInfoUsage == true,
+                "termsOf personalInfoUsage must be true");
 
         this.termsOfUse = termsOfUse;
         this.personalInfoUsage = personalInfoUsage;

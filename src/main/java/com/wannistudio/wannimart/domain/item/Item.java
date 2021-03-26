@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
@@ -128,6 +130,8 @@ public abstract class Item {
   }
 
   public void removeStock(int quantity) {
+    checkArgument(stockQuantity >= quantity, "item Stock must be greater than quantity");
+
     int restStock = this.stockQuantity - quantity;
     if(restStock < 0) {
       throw new NotEnoughStockException("need more stock");

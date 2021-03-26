@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Entity
 @Getter
 @Setter
@@ -25,6 +27,8 @@ public class ItemCategory {
   private Category category;
 
   public static ItemCategory createItemCategory(Category category) {
+    checkNotNull(category, "category must not be null");
+
     ItemCategory categoryItem = new ItemCategory();
     categoryItem.setCategory(category);
     return categoryItem;

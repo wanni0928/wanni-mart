@@ -1,4 +1,4 @@
-package com.wannistudio.wannimart.controller.authentication;
+package com.wannistudio.wannimart.controller.member;
 
 import com.wannistudio.wannimart.domain.member.Email;
 import com.wannistudio.wannimart.domain.member.Member;
@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +15,6 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 
 @Getter
 @Setter
-@ToString
 public class MemberDto {
 
   @ApiModelProperty(value = "PK", required = true)
@@ -37,5 +38,17 @@ public class MemberDto {
   public MemberDto(Member source) {
     copyProperties(source, this);
     this.lastLoginAt = source.getLastLoginAt().orElse(null);
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+            .append("id", id)
+            .append("name", name)
+            .append("email", email)
+            .append("loginCount", loginCount)
+            .append("lastLoginAt", lastLoginAt)
+            .append("createAt", createAt)
+            .toString();
   }
 }

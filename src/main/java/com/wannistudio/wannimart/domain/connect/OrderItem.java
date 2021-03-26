@@ -10,6 +10,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Entity
 @Getter
 @Setter
@@ -34,6 +37,10 @@ public class OrderItem {
 
   // 생성 매서드
   public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+    checkNotNull(item, "item must not be null");
+    checkArgument(count > 0, "count must not be 0");
+    checkArgument(item.getStockQuantity() >= count, "item stock must greater than count");
+
     OrderItem orderItem = new OrderItem();
     orderItem.setItem(item);
     orderItem.setOrderPrice(orderPrice);

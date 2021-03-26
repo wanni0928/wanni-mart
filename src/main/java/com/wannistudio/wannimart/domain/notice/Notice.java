@@ -25,4 +25,8 @@ public class Notice {
   private String author;
   private LocalDateTime dateCreated;
   private int hit;
+
+  public void view() {
+    hit++;
+  }
 }

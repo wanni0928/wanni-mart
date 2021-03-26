@@ -5,6 +5,8 @@ import com.wannistudio.wannimart.config.jwt.Jwt;
 import com.wannistudio.wannimart.controller.member.JoinRequest;
 import com.wannistudio.wannimart.domain.order.Order;
 import lombok.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -13,13 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.time.LocalDateTime.now;
 import static java.util.Optional.ofNullable;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Getter
 @Entity
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
   @Id
@@ -70,6 +74,35 @@ public class Member {
   @OneToMany(mappedBy = "member")
   private List<Order> orders = new ArrayList<>();
 
+  public Member(String account, String password, String name, Email email, String phoneNumber, Address address, Gender gender, Birth birth, Agreement agreement) {
+    this(null, account, password, name, email, phoneNumber, address, gender, birth, agreement, 0, null, null, null);
+  }
+
+  public Member(Long id, String account, String password, String name, Email email, String phoneNumber, Address address, Gender gender, Birth birth, Agreement agreement, int loginCount, LocalDateTime lastLoginAt, LocalDateTime createAt, List<Order> orders) {
+    checkArgument(isNotEmpty(name), "name must be provided.");
+    checkArgument(
+            name.length() >= 1 && name.length() <= 10,
+            "name length must be between 1 and 10 characters."
+    );
+    checkNotNull(email, "email must be provided.");
+    checkNotNull(password, "password must be provided.");
+
+    this.id = id;
+    this.account = account;
+    this.password = password;
+    this.name = name;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.address = address;
+    this.gender = gender;
+    this.birth = birth;
+    this.agreement = agreement;
+    this.loginCount = loginCount;
+    this.lastLoginAt = lastLoginAt;
+    this.createAt = createAt;
+    this.orders = orders;
+  }
+
   public static Member of(PasswordEncoder passwordEncoder, JoinRequest joinRequest) {
     return Member.builder()
             .account(joinRequest.getPrincipal())
@@ -102,5 +135,24 @@ public class Member {
   }
   public Optional<LocalDateTime> getLastLoginAt() {
     return ofNullable(lastLoginAt);
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+            .append("id", id)
+            .append("account", account)
+            .append("password", "[PROTECTED]")
+            .append("name", name)
+            .append("email", email)
+            .append("phoneNumber", phoneNumber)
+            .append("address", address)
+            .append("gender", gender)
+            .append("birth", birth)
+            .append("agreement", agreement)
+            .append("loginCount", loginCount)
+            .append("createAt", createAt)
+            .append("orders", orders)
+            .toString();
   }
 }
