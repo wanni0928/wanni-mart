@@ -2,6 +2,8 @@ package com.wannistudio.wannimart.controller.member;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Getter
 @NoArgsConstructor @AllArgsConstructor @Builder
@@ -51,4 +53,25 @@ public class JoinRequest {
 
   @ApiModelProperty(value = "성인 여부", required = true)
   private boolean isAdult;
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+            .append("principal", principal)
+            .append("credential", credential)
+            .append("name", name)
+            .append("email", email)
+            .append("phoneNumber", phoneNumber)
+            .append("cityStreetAddress", cityStreetAddress)
+            .append("residentAddress", residentAddress)
+            .append("gender", gender)
+            .append("year", year)
+            .append("month", month)
+            .append("day", day)
+            .append("termOfUse", termsOfUse)
+            .append("personalInfoUsage", personalInfoUsage)
+            .append("marketingUsage", marketingUsage)
+            .append("isAdult", isAdult)
+            .toString();
+  }
 }

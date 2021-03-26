@@ -37,12 +37,10 @@ public class ConnectionBasedVoter implements AccessDecisionVoter<FilterInvocatio
 
 
     if (!requiresAuthorization(request)) {
-      System.out.println("ConnectionBasedVoter.vote.!requiresAuthorization(request)");
       return ACCESS_GRANTED;
     }
 
     if (!isAssignable(JwtAuthenticationToken.class, authentication.getClass())) {
-      System.out.println("ConnectionBasedVoter.vote.!isAssignable(JwtAuthenticationToken.class, authentication.getClass())");
       return ACCESS_ABSTAIN;
     }
 

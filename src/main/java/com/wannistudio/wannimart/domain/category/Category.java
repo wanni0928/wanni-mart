@@ -5,13 +5,17 @@ import com.wannistudio.wannimart.domain.connect.ItemCategory;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 
 @Entity
 @Getter
@@ -39,6 +43,7 @@ public class Category {
   private List<Category> children = new ArrayList<>();
 
   public Category(String name) {
+    checkNotNull(name, "name must be provided");
     this.name = name;
   }
 
@@ -55,5 +60,13 @@ public class Category {
   public void addItemCategory(ItemCategory itemCategory) {
     this.getCategoryItems().add(itemCategory);
     itemCategory.setCategory(this);
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+            .append("id", id)
+            .append("name", name)
+            .toString();
   }
 }

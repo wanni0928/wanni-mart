@@ -2,6 +2,8 @@ package com.wannistudio.wannimart.domain.member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Embeddable;
 
@@ -23,5 +25,14 @@ public class Birth {
         this.year = year;
         this.month = month;
         this.day = day;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("year", year)
+                .append("month", month)
+                .append("day", day)
+                .toString();
     }
 }

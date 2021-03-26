@@ -7,13 +7,10 @@ import com.wannistudio.wannimart.domain.item.Item;
 import com.wannistudio.wannimart.domain.item.PackageType;
 import com.wannistudio.wannimart.domain.member.Member;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class ItemRequest {

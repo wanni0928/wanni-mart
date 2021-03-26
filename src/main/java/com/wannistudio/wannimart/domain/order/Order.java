@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Entity
 @Table(name = "orders")
 @Getter @Setter
@@ -41,7 +44,6 @@ public class Order {
   @Enumerated(EnumType.STRING)
   private OrderStatus status; //주문상태 [ORDER, CANCEL]
 
-  // 연관관계 편의 메서드 (양방향 연관관계 시 필요.)
   public void setMember(Member member) {
     this.member = member;
     member.getOrders().add(this);
@@ -52,8 +54,10 @@ public class Order {
     orderItem.setOrder(this);
   }
 
-  // 생성 매서드
   public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+    checkNotNull(member, "member must be provided");
+    checkNotNull(delivery, "delivery must be provided");
+
     Order order = new Order();
     order.setMember(member);
     order.setDelivery(delivery);
@@ -64,6 +68,8 @@ public class Order {
   }
 
   public void cancel() {
+    checkArgument(delivery.getStatus() == DeliveryStatus.COMP, "delivery status must not be COMP");
+
     if(delivery.getStatus() == DeliveryStatus.COMP) {
       throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능 합니다.");
     }

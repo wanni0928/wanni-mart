@@ -68,13 +68,13 @@ public class Swagger2Configure implements WebMvcConfigurer {
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
             .title("Wanni-Mart")
-            .contact(new Contact("username", null, "your-email@address.com"))
+            .contact(new Contact("choi hyung joong", "https://github.com/wanni0928", "chlgudwnd123@gmail.com"))
             .version("1.0.0")
             .build();
   }
 
   private ApiKey apiKey() {
-    return new ApiKey("apiKey", jwtTokenConfigure.getHeader(), "header");
+    return new ApiKey("apiKey(Bearer {$your_apikey})", jwtTokenConfigure.getHeader(), "header");
   }
 
   private SecurityContext securityContext() {

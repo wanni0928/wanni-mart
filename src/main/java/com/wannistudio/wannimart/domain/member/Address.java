@@ -3,6 +3,8 @@ package com.wannistudio.wannimart.domain.member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.Embeddable;
 
@@ -21,5 +23,13 @@ public class Address {
         checkNotNull(residentAddress, "residentAddress must be provided");
         this.cityStreetAddress = cityStreetAddress;
         this.residentAddress = residentAddress;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("cityStreetAddress", cityStreetAddress)
+                .append("residentAddress", residentAddress)
+                .toString();
     }
 }

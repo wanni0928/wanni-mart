@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import static com.wannistudio.wannimart.controller.api.ApiResult.*;
-import static java.util.stream.Collectors.*;
-import static java.util.stream.Collectors.toSet;
+import static com.wannistudio.wannimart.controller.api.ApiResult.OK;
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("api")

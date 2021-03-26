@@ -48,10 +48,6 @@ public class ItemService {
     Item item = itemRepository.findById(itemId).orElseThrow(NullPointerException::new);
     Category category = categoryRepository.findById(categoryId).orElseThrow(NullPointerException::new);
 
-//    ItemCategory itemCategory = new ItemCategory();
-//    itemCategory.setItem(item);
-//    itemCategory.setCategory(category);
-
     ItemCategory itemCategory = ItemCategory.createItemCategory(category);
 
     item.addItemCategory(itemCategory);

@@ -48,11 +48,8 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
         try {
           Jwt.Claims claims = verify(authorizationToken);
           logger.debug("Jwt parse result: {}", claims);
+
           // 만료 10분 전
-
-          long exp = claims.exp();
-          long remain = System.currentTimeMillis() - exp;
-
           if (canRefresh(claims, 6000 * 10)) {
             String refreshToken = jwt.refreshToken(authorizationToken);
             response.setHeader(headerKey, refreshToken);
