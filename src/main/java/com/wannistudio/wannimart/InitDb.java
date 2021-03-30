@@ -28,17 +28,6 @@ public class InitDb {
   public void init() {
 //    initService.establishSampleMember();
 //    initService.establishCategory();
-//    StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
-//    pbeEnc.setPassword("wanni");
-//    pbeEnc.setAlgorithm("PBEWithMD5AndDES");
-//
-//    String url = "jdbc:postgresql://35.221.177.149:5432/wannimart";
-//    String username = "wanni";
-//    String password = "wanni0928";
-//
-//    System.out.println("변경된 url : " + pbeEnc.encrypt(url));
-//    System.out.println("변경된 username : " + pbeEnc.encrypt(username));
-//    System.out.println("변경된 password : " + pbeEnc.encrypt(password));
   }
 
   @Component

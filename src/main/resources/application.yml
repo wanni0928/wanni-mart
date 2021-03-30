@@ -15,9 +15,9 @@ spring:
       hibernate:
         hibernate.hbm2ddl.import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
   datasource:
-    url: ENC(9EWEwraoTu4na1VrwLj5Hydjxg1LkhbJIFsablrqLgmtKpyT21Yse+FMtelLnLSz+cbDGPEQfQY=)
-    username: ENC(1BdP0PWDB4FHKMARcZwelQ==)
-    password: ENC(EyQMHXyxj2pNa62TuCNNvlcEf2IaITjI)
+    url: ENC(aaUDaoLUn91Vhg457iWMTASha0kylHdnpxZPJ2KLhAN9/itmthHQ1+HGW46F3vWvzoJogv3Do4U=)
+    username: ENC(YOO5zgr7tPSGxcnmQwmVzw==)
+    password: ENC(kfi0ALvluj1quiX14KKtAIU6StSmeS1S)
 
 jwt:
   token:
