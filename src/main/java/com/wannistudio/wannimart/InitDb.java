@@ -7,6 +7,8 @@ import com.wannistudio.wannimart.domain.member.Member;
 import com.wannistudio.wannimart.service.CategoryService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.jasypt.encryption.StringEncryptor;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,16 +17,28 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 
-@Profile(value = "local")
+@Profile(value = "dev")
 @Component
 @AllArgsConstructor
 public class InitDb {
   private final InitService initService;
 
+
   @PostConstruct
   public void init() {
-    initService.establishSampleMember();
-    initService.establishCategory();
+//    initService.establishSampleMember();
+//    initService.establishCategory();
+//    StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
+//    pbeEnc.setPassword("wanni");
+//    pbeEnc.setAlgorithm("PBEWithMD5AndDES");
+//
+//    String url = "jdbc:postgresql://35.221.177.149:5432/wannimart";
+//    String username = "wanni";
+//    String password = "wanni0928";
+//
+//    System.out.println("변경된 url : " + pbeEnc.encrypt(url));
+//    System.out.println("변경된 username : " + pbeEnc.encrypt(username));
+//    System.out.println("변경된 password : " + pbeEnc.encrypt(password));
   }
 
   @Component
