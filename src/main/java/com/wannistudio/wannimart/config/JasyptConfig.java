@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
-@EnableAutoConfiguration
 public class JasyptConfig {
 
-  @Value("${jasypt.encryptor.passwordKey}")
-  private String password;
+//  @Value("${jasypt.encryptor.passwordKey}")
+//  private String password;
 
   @Bean("jasyptStringEncryptor")
   public StringEncryptor stringEncryptor() {
@@ -21,7 +21,7 @@ public class JasyptConfig {
     PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
     SimpleStringPBEConfig config = new SimpleStringPBEConfig();
 
-    config.setPassword(password);
+    config.setPassword("wannimart");
     config.setAlgorithm("PBEWithMD5AndDES");
     config.setKeyObtentionIterations("1000");
     config.setPoolSize("1");
