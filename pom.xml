@@ -23,6 +23,7 @@
         <java.jwt.version>3.12.0</java.jwt.version>
         <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
         <querydsl.version>4.4.0</querydsl.version>
+        <jasypt.version>3.0.3</jasypt.version>
     </properties>
 
     <dependencies>
@@ -132,6 +133,19 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
             <version>${querydsl.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.60</version>
         </dependency>
 
     </dependencies>

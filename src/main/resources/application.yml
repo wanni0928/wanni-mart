@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: dev
   application:
     name: wannimart
   messages:
@@ -9,10 +9,16 @@ spring:
     cache-duration: PT1H
   jpa:
     hibernate:
+      ddl-auto: update
       use-new-id-generator-mappings: false
     properties:
       hibernate:
         hibernate.hbm2ddl.import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+  datasource:
+    url: ENC(9EWEwraoTu4na1VrwLj5Hydjxg1LkhbJIFsablrqLgmtKpyT21Yse+FMtelLnLSz+cbDGPEQfQY=)
+    username: ENC(1BdP0PWDB4FHKMARcZwelQ==)
+    password: ENC(EyQMHXyxj2pNa62TuCNNvlcEf2IaITjI)
+
 jwt:
   token:
     header: api_key
@@ -20,16 +26,15 @@ jwt:
     clientSecret: Rel3Bjce2MajBo09qgkNgYaTuzvJe8iwnBFhsDS5
     expirySeconds: 6000
 
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
 ---
 #local 환경
 spring:
   config:
     activate:
       on-profile: local
-  datasource:
-    url: jdbc:postgresql://localhost:5432/wannimart
-    username: wanni
-    password: wanni0928
 
   jpa:
     show-sql: true
@@ -56,5 +61,4 @@ spring:
 logging:
   level:
     org.hibernate.SQL: info # logger 로 출력
-    org.hibernate.type: trace # 쿼리 파라미터 로그 출력
 ---
