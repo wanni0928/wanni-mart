@@ -50,9 +50,9 @@ spring:
       hibernate:
         hibernate.hbm2ddl.import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
   datasource:
-    url: ENC(aaUDaoLUn91Vhg457iWMTASha0kylHdnpxZPJ2KLhAN9/itmthHQ1+HGW46F3vWvzoJogv3Do4U=)
-    username: ENC(YOO5zgr7tPSGxcnmQwmVzw==)
-    password: ENC(kfi0ALvluj1quiX14KKtAIU6StSmeS1S)
+    url: d
+    username: a
+    password: h
 
 jasypt:
   encryptor:
@@ -60,5 +60,15 @@ jasypt:
 
 logging:
   level:
-    org.hibernate.SQL: info # logger 로 출력
+    org:
+      hibernate:
+        SQL: off
+      springframework:
+        web: DEBUG
+
+
+server:
+  error:
+    include-message: ALWAYS
+    include-stacktrace: never
 ---
