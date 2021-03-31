@@ -15,6 +15,8 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
+import springfox.documentation.swagger.web.UiConfiguration;
+import springfox.documentation.swagger.web.UiConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
@@ -49,6 +51,13 @@ public class Swagger2Configure implements WebMvcConfigurer {
   }
 
   @Bean
+  public UiConfiguration uiConfig() {
+    return UiConfigurationBuilder.builder()
+            .supportedSubmitMethods(UiConfiguration.Constants.NO_SUBMIT_METHODS)
+            .build();
+  }
+
+  @Bean
   public SecurityConfiguration security() {
     return SecurityConfigurationBuilder.builder()
             .scopeSeparator(",")
@@ -68,6 +77,9 @@ public class Swagger2Configure implements WebMvcConfigurer {
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
             .title("Wanni-Mart")
+            .description("online shop Order management api")
+            .license("Apache 2.0")
+            .licenseUrl("http://springdoc.org")
             .contact(new Contact("choi hyung joong", "https://github.com/wanni0928", "chlgudwnd123@gmail.com"))
             .version("1.0.0")
             .build();
