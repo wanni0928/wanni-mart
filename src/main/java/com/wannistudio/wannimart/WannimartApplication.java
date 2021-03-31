@@ -9,9 +9,8 @@ public class WannimartApplication {
 
   public static void main(String[] args) {
     new SpringApplicationBuilder(WannimartApplication.class)
-            .properties("spring.config.location=/home/wannidev0928/app/application.yml")
+            .properties("spring.config.location=/home/wannidev0928/appconfig/application.yml")
             .build()
             .run(args);
   }
-
 }
