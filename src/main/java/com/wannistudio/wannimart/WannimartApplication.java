@@ -1,6 +1,6 @@
 package com.wannistudio.wannimart;
 
-import org.springframework.boot.SpringApplication;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
@@ -9,7 +9,8 @@ public class WannimartApplication {
 
   public static void main(String[] args) {
     new SpringApplicationBuilder(WannimartApplication.class)
-            .properties("D:\\Users\\chju\\qqq.yml")
+            .properties("spring.config.location=/home/wannidev0928/app/application.yml")
+            .build()
             .run(args);
   }
 
