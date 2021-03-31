@@ -3,37 +3,24 @@ package com.wannistudio.wannimart.repository.item;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wannistudio.wannimart.controller.item.ItemDto;
 import com.wannistudio.wannimart.controller.item.ItemSearch;
-import com.wannistudio.wannimart.controller.item.QItemDto;
-import com.wannistudio.wannimart.domain.category.QCategory;
 import com.wannistudio.wannimart.domain.connect.ItemCategoryQueryDto;
-import com.wannistudio.wannimart.domain.connect.QItemCategory;
 import com.wannistudio.wannimart.domain.connect.QItemCategoryQueryDto;
 import com.wannistudio.wannimart.domain.item.Item;
 import com.wannistudio.wannimart.domain.item.QFood;
 import com.wannistudio.wannimart.domain.item.QGoods;
 import com.wannistudio.wannimart.domain.item.QItem;
-import com.wannistudio.wannimart.domain.order.OrderStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
-
 import java.util.List;
-import java.util.Set;
 
-import static com.wannistudio.wannimart.domain.category.QCategory.*;
-import static com.wannistudio.wannimart.domain.connect.QItemCategory.*;
-import static com.wannistudio.wannimart.domain.item.QFood.*;
-import static com.wannistudio.wannimart.domain.item.QGoods.*;
-import static com.wannistudio.wannimart.domain.item.QItem.*;
-import static com.wannistudio.wannimart.domain.member.QMember.member;
-import static com.wannistudio.wannimart.domain.order.QOrder.order;
+import static com.wannistudio.wannimart.domain.category.QCategory.category;
+import static com.wannistudio.wannimart.domain.connect.QItemCategory.itemCategory;
 
 public class ItemRepositoryCustomQueryImpl implements ItemRepositoryCustomQuery {
 
