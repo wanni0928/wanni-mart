@@ -15,5 +15,6 @@ public interface ItemRepositoryCustomQuery {
   Page<ItemCategoryQueryDto> findAllAdvanced(Pageable pageable);
   List<Item> findAllWithCategory(int offset, int limit);
   List<ItemCategoryQueryDto> findAllWithItemCategory(int offset, int limit, ItemSearch itemSearch);
+  List<ItemCategoryQueryDto> findFirstPageItemCategory(Pageable pageable);
   Page<ItemCategoryQueryDto> findAllWithPageableItemCategory(Pageable pageable, ItemSearch itemSearch);
 }
