@@ -6,9 +6,13 @@ spring:
     encoding: UTF-8
     cache-duration: PT1H
   datasource:
-    url:
-    username:
-    password:
+    url: jdbc:postgresql://localhost:5432/wannimart
+    username: wanni
+    password: wanni0928
+  redis:
+    host: localhost
+    password: ''
+    port: 6379
 
   jpa:
     show-sql: true
@@ -29,10 +33,10 @@ jasypt:
 logging:
   level:
     org:
-      hibernate:
-        SQL: off
+      hibernate.SQL: error # logger 로 출력
+      hibernate.type: error # 쿼리 파라미터 로그 출력
       springframework:
-        web: DEBUG
+        web: info
 
 server:
   error:
@@ -40,7 +44,7 @@ server:
     include-stacktrace: never
 jwt:
   token:
-    header: api_key
+    header: api-key
     issuer: wanni_market
     clientSecret:
     expirySeconds: 6000

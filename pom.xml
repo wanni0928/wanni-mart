@@ -24,6 +24,7 @@
         <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
         <querydsl.version>4.4.0</querydsl.version>
         <jasypt.version>3.0.3</jasypt.version>
+        <bcprov-jdk15on.version>1.60</bcprov-jdk15on.version>
     </properties>
 
     <dependencies>
@@ -145,7 +146,12 @@
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.60</version>
+            <version>${bcprov-jdk15on.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>

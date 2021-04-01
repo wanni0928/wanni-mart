@@ -93,6 +93,34 @@ public class ItemRepositoryCustomQueryImpl implements ItemRepositoryCustomQuery 
   }
 
   @Override
+  public List<ItemCategoryQueryDto> findFirstPageItemCategory(Pageable pageable) {
+    return queryFactory
+            .select(Projections.constructor(ItemCategoryQueryDto.class,
+                    itemCategory.id,
+                    item.name,
+                    item.deliveryType,
+                    item.packageType,
+                    item.price,
+                    item.stockQuantity,
+                    item.summary,
+                    item.unit,
+                    item.volume,
+                    food.allergyInformation,
+                    food.expiration,
+                    food.importFrom,
+                    goods.material,
+                    goods.size,
+                    goods.name)).from(itemCategory)
+            .join(item).on(itemCategory.item.id.eq(item.id))
+            .join(category).on(itemCategory.category.id.eq(category.id))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .orderBy(itemCategory.id.desc())
+            .fetchResults()
+            .getResults();
+  }
+
+  @Override
   public Page<ItemCategoryQueryDto> findAllWithPageableItemCategory(Pageable pageable, ItemSearch itemSearch) {
     final QueryResults<ItemCategoryQueryDto> results = queryFactory
             .select(new QItemCategoryQueryDto(
