@@ -3,7 +3,9 @@ package com.wannistudio.wannimart.domain.connect;
 import com.querydsl.core.annotations.QueryProjection;
 import com.wannistudio.wannimart.domain.item.DeliveryType;
 import com.wannistudio.wannimart.domain.item.PackageType;
+import lombok.Getter;
 
+@Getter
 public class ItemCategoryQueryDto {
   private Long id;
   private String itemName;

@@ -5,6 +5,7 @@ import com.wannistudio.wannimart.domain.category.Category;
 import com.wannistudio.wannimart.domain.connect.ItemCategoryQueryDto;
 import com.wannistudio.wannimart.domain.item.Item;
 import com.wannistudio.wannimart.service.CategoryService;
+import com.wannistudio.wannimart.service.ItemCacheService;
 import com.wannistudio.wannimart.service.ItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +27,7 @@ import static java.util.stream.Collectors.toList;
 public class ItemRestController {
   private final ItemService itemService;
   private final CategoryService categoryService;
+  private final ItemCacheService itemCacheService;
 
   @PostMapping("/item/create")
   @ApiOperation(value = "상품등록")
@@ -72,6 +74,10 @@ public class ItemRestController {
   @GetMapping("/item/v4/list")
   @ApiOperation(value = "상품 조회 - 상품, 카테고리 전체 조회 - 페이징 처리")
   public ApiResult<Page<ItemCategoryQueryDto>> itemsV4(Pageable pageable, ItemSearch itemSearch) {
+    if (pageable.getPageNumber() == 0) {
+      System.out.println("ItemRestController.itemsV4.first");
+      return OK(itemCacheService.getFirstItemPage());
+    }
     return OK(itemService.findAllItemCategoryWithPage(pageable, itemSearch));
   }
 }
