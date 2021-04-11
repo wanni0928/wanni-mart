@@ -74,10 +74,10 @@ public class ItemRestController {
   @GetMapping("/item/v4/list")
   @ApiOperation(value = "상품 조회 - 상품, 카테고리 전체 조회 - 페이징 처리")
   public ApiResult<Page<ItemCategoryQueryDto>> itemsV4(Pageable pageable, ItemSearch itemSearch) {
-    if (pageable.getPageNumber() == 0) {
-      System.out.println("ItemRestController.itemsV4.first");
-      return OK(itemCacheService.getFirstItemPage());
-    }
+//    if (pageable.getPageNumber() == 0) {
+//      System.out.println("ItemRestController.itemsV4.first");
+//      return OK(itemCacheService.getFirstItemPage());
+//    }
     return OK(itemService.findAllItemCategoryWithPage(pageable, itemSearch));
   }
 }
