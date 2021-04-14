@@ -50,12 +50,12 @@ public class Swagger2Configure implements WebMvcConfigurer {
             .build();
   }
 
-  @Bean
-  public UiConfiguration uiConfig() {
-    return UiConfigurationBuilder.builder()
-            .supportedSubmitMethods(UiConfiguration.Constants.NO_SUBMIT_METHODS)
-            .build();
-  }
+//  @Bean
+//  public UiConfiguration uiConfig() {
+//    return UiConfigurationBuilder.builder()
+//            .supportedSubmitMethods(UiConfiguration.Constants.NO_SUBMIT_METHODS)
+//            .build();
+//  }
 
   @Bean
   public SecurityConfiguration security() {
