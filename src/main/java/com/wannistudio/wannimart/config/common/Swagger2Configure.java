@@ -86,7 +86,7 @@ public class Swagger2Configure implements WebMvcConfigurer {
   }
 
   private ApiKey apiKey() {
-    return new ApiKey("apiKey(Bearer {$your_apikey})", jwtTokenConfigure.getHeader(), "header");
+    return new ApiKey("apiKey", jwtTokenConfigure.getHeader(), "header");
   }
 
   private SecurityContext securityContext() {
